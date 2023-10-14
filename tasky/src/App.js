@@ -10,16 +10,17 @@ import Grid from '@mui/material/Grid';
 function App() {
   const [ taskState, setTaskState ] = useState({
     tasks: [
-      { id: 1, title:"Dishes", description: "Empty dishwasher", deadline: "Today", done: false},
-      { id: 2, title: "Laundry", description: "Fold clothes and put away", deadline: "Tomorrow", done: false},
-      { id: 3, title: "Tidy up", deadline: "Today", done: false}
+      { id: 1, title: "Dishes", description: "Empty dishwasher", deadline: "Today", done: false, priority: "low" },
+      { id: 2, title: "Laundry", description: "Fold clothes and put away", deadline: "Tomorrow", done: false, priority: "medium" },
+      { id: 3, title: "Tidy up", deadline: "Today", done: false, priority: "high" }
     ]
   });
 
   const [ formState, setFormState ] = useState({
     title: "",
     description: "",
-    deadline: ""
+    deadline: "",
+    priority:""
   });
 
   const doneHandler=(taskIndex)=>{
@@ -63,7 +64,7 @@ function App() {
     const form = {...formState};
 
     form.id = uuidv4();
-    
+
     tasks.push(form);
     setTaskState({tasks});
   }
@@ -97,6 +98,7 @@ function App() {
                 description={task.description}
                 deadline={task.deadline}
                 done={task.done}
+                priority={task.priority}
                 key={task.id}
                 markDone = {() => doneHandler(index)}
                 deleteTask = {() => deleteHandler(index)}
@@ -113,7 +115,7 @@ function App() {
         }}
       >
         <Grid container justifyContent="center">
-          <AddTaskForm submit={formSubmitHandler} change={formChangeHandler} />
+          <AddTaskForm submit={formSubmitHandler} change={formChangeHandler} priority={formState.priority} />
         </Grid>
       </Container>
     </div>
